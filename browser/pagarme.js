@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _client2 = _interopRequireDefault(_client);
 	
-	var _validations = __webpack_require__(162);
+	var _validations = __webpack_require__(163);
 	
 	var _validations2 = _interopRequireDefault(_validations);
 	
@@ -169,10 +169,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @example
 	 * // API Key Authentication
-	 * pagarme.client.connect({ apiKey: 'ak_test_y7jk294ynbzf93' })
+	 * pagarme.client.connect({ api_key: 'ak_test_y7jk294ynbzf93' })
 	 *
 	 * // Encryption Key Authentication
-	 * pagarme.client.connect({ encryptionKey: 'ek_test_y7jk294ynbzf93' })
+	 * pagarme.client.connect({ encryption_key: 'ek_test_y7jk294ynbzf93' })
 	 *
 	 * // Login Authentication
 	 * pagarme.client.connect({ email: 'user@email.com', password: '123456' })
@@ -2551,6 +2551,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 	
+	var zipcodes = {
+	  details: function details(zipcode) {
+	    return '/zipcodes/' + zipcode;
+	  }
+	};
+	
 	exports.default = {
 	  acquirers: acquirers,
 	  acquirersConfigurations: acquirersConfigurations,
@@ -2576,7 +2582,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  transactions: transactions,
 	  transfers: transfers,
 	  user: user,
-	  customers: customers
+	  customers: customers,
+	  zipcodes: zipcodes
 	};
 	module.exports = exports['default'];
 
@@ -10325,12 +10332,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	*                      is usually already bound
 	*                      by `connect` functions.
 	*
+	* @param {Object} body The payload for the request
 	* @returns {Promise} A promise that resolves to
 	*                    the newly created company's
 	*                    data or to an error.
 	**/
-	var createTemporary = function createTemporary(opts) {
-	  return _request2.default.post(opts, _routes2.default.company.temporary, {});
+	var createTemporary = function createTemporary(opts, body) {
+	  return _request2.default.post(opts, _routes2.default.company.temporary, body);
 	};
 	
 	/**
@@ -10594,6 +10602,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _customers2 = _interopRequireDefault(_customers);
 	
+	var _zipcodes = __webpack_require__(162);
+	
+	var _zipcodes2 = _interopRequireDefault(_zipcodes);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = {
@@ -10621,7 +10633,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  gatewayOperations: _gatewayOperations2.default,
 	  postbacks: _postbacks2.default,
 	  security: _security2.default,
-	  customers: _customers2.default
+	  customers: _customers2.default,
+	  zipcodes: _zipcodes2.default
 	};
 	module.exports = exports['default'];
 
@@ -22960,7 +22973,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _mapObjIndexed = __webpack_require__(163);
+	var _curry = __webpack_require__(52);
+	
+	var _curry2 = _interopRequireDefault(_curry);
+	
+	var _routes = __webpack_require__(53);
+	
+	var _routes2 = _interopRequireDefault(_routes);
+	
+	var _request = __webpack_require__(54);
+	
+	var _request2 = _interopRequireDefault(_request);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/**
+	 * `GET /zipcodes`
+	 * Makes a request to /zipcodes/:zipcode
+	 *
+	 * @param {Object} opts An options params which
+	 *                      is usually already bound
+	 *                      by `connect` functions.
+	 *
+	 * @param {Object} body The payload for the request.
+	 * {@link https://docs.pagar.me/v2017-07-17/reference#consulta-de-cep|API Reference for this payload}
+	 * @param {String} [body.zipcode] The zipcode you want more information about.
+	 *                                If not sent an API error will be returned instead.
+	*/
+	
+	var find = (0, _curry2.default)(function (opts, body) {
+	  return _request2.default.get(opts, _routes2.default.zipcodes.details(body.zipcode), {});
+	}); /**
+	     * @name Zipcodes
+	     * @description This module exposes functions
+	     *              related to the `/zipcodes` path.
+	     *
+	     * @module zipcodes
+	     **/
+	
+	exports.default = {
+	  find: find
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _mapObjIndexed = __webpack_require__(164);
 	
 	var _mapObjIndexed2 = _interopRequireDefault(_mapObjIndexed);
 	
@@ -22972,11 +23038,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ifElse2 = _interopRequireDefault(_ifElse);
 	
-	var _ = __webpack_require__(164);
+	var _ = __webpack_require__(165);
 	
 	var _2 = _interopRequireDefault(_);
 	
-	var _prop = __webpack_require__(165);
+	var _prop = __webpack_require__(166);
 	
 	var _prop2 = _interopRequireDefault(_prop);
 	
@@ -22992,32 +23058,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _pipe2 = _interopRequireDefault(_pipe);
 	
-	var _validators = __webpack_require__(166);
+	var _validate = __webpack_require__(167);
 	
-	var _validators2 = _interopRequireDefault(_validators);
+	var _validate2 = _interopRequireDefault(_validate);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/**
-	 * @name Validator
-	 * @description This module handles some validations
-	 * @module validator
+	 * @name Validations
+	 * @description This module handles needed validations
+	 * @module validations
 	 **/
 	
-	var filterValidTypes = (0, _pipe2.default)(_keys2.default, _pick2.default);
+	var pickExistentValidations = (0, _pipe2.default)(_keys2.default, _pick2.default);
 	
-	var validation = (0, _prop2.default)(_2.default, _validators2.default);
+	var validation = (0, _prop2.default)(_2.default, _validate2.default);
 	
 	var mapIfArray = function mapIfArray(func) {
 	  return (0, _ifElse2.default)(Array.isArray, (0, _map2.default)(func), func);
 	};
 	
-	var applyValidator = function applyValidator(subject, type) {
-	  var validator = mapIfArray(validation(type));
-	  return validator(subject);
+	var validateInput = function validateInput(value, name) {
+	  return mapIfArray(validation(name))(value);
 	};
 	
-	var applyValidators = (0, _mapObjIndexed2.default)(applyValidator);
+	var applyValidations = (0, _mapObjIndexed2.default)(validateInput);
 	
 	/**
 	 * This method validates the properties supplied in the object.
@@ -23052,13 +23117,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *                   with true or false, indicating if the supplied value is valid
 	 *                   or invalid.
 	 **/
-	var validate = (0, _pipe2.default)(filterValidTypes(_validators2.default), applyValidators);
+	var validate = (0, _pipe2.default)(pickExistentValidations(_validate2.default), applyValidations);
 	
 	exports.default = validate;
 	module.exports = exports['default'];
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23096,7 +23161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports) {
 
 	/**
@@ -23129,7 +23194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23157,7 +23222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23166,15 +23231,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _anyPass = __webpack_require__(167);
+	var _anyPass = __webpack_require__(168);
 	
 	var _anyPass2 = _interopRequireDefault(_anyPass);
 	
-	var _cnpjAndCpf = __webpack_require__(169);
-	
-	var _numberSize = __webpack_require__(185);
-	
-	var _numberSize2 = _interopRequireDefault(_numberSize);
+	var _cnpjAndCpf = __webpack_require__(170);
 	
 	var _email = __webpack_require__(186);
 	
@@ -23184,6 +23245,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _card2 = _interopRequireDefault(_card);
 	
+	var _numberSize = __webpack_require__(215);
+	
+	var _numberSize2 = _interopRequireDefault(_numberSize);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ddd = (0, _numberSize2.default)(2);
@@ -23191,24 +23256,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	var zipcode = (0, _numberSize2.default)(8);
 	
 	exports.default = {
+	  card: _card2.default,
 	  cnpj: _cnpjAndCpf.cnpj,
 	  cpf: _cnpjAndCpf.cpf,
 	  ddd: ddd,
 	  email: _email2.default,
 	  phone: phone,
-	  zipcode: zipcode,
-	  card: _card2.default
+	  zipcode: zipcode
 	};
 	module.exports = exports['default'];
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry1 = __webpack_require__(7);
 	var curryN = __webpack_require__(23);
 	var max = __webpack_require__(48);
-	var pluck = __webpack_require__(168);
+	var pluck = __webpack_require__(169);
 	var reduce = __webpack_require__(49);
 	
 	
@@ -23252,12 +23317,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
 	var map = __webpack_require__(9);
-	var prop = __webpack_require__(165);
+	var prop = __webpack_require__(166);
 	
 	
 	/**
@@ -23284,7 +23349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23298,7 +23363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _T2 = _interopRequireDefault(_T);
 	
-	var _F = __webpack_require__(170);
+	var _F = __webpack_require__(171);
 	
 	var _F2 = _interopRequireDefault(_F);
 	
@@ -23310,7 +23375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _toString2 = _interopRequireDefault(_toString);
 	
-	var _allPass = __webpack_require__(171);
+	var _allPass = __webpack_require__(172);
 	
 	var _allPass2 = _interopRequireDefault(_allPass);
 	
@@ -23322,27 +23387,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _equals2 = _interopRequireDefault(_equals);
 	
-	var _apply = __webpack_require__(172);
+	var _apply = __webpack_require__(173);
 	
 	var _apply2 = _interopRequireDefault(_apply);
 	
-	var _nth = __webpack_require__(173);
+	var _nth = __webpack_require__(174);
 	
 	var _nth2 = _interopRequireDefault(_nth);
 	
-	var _subtract = __webpack_require__(174);
+	var _subtract = __webpack_require__(175);
 	
 	var _subtract2 = _interopRequireDefault(_subtract);
 	
-	var _ = __webpack_require__(164);
+	var _ = __webpack_require__(165);
 	
 	var _2 = _interopRequireDefault(_);
 	
-	var _modulo = __webpack_require__(175);
+	var _modulo = __webpack_require__(176);
 	
 	var _modulo2 = _interopRequireDefault(_modulo);
 	
-	var _add = __webpack_require__(176);
+	var _add = __webpack_require__(177);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
@@ -23350,7 +23415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _reduce2 = _interopRequireDefault(_reduce);
 	
-	var _split = __webpack_require__(177);
+	var _split = __webpack_require__(178);
 	
 	var _split2 = _interopRequireDefault(_split);
 	
@@ -23358,7 +23423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _length2 = _interopRequireDefault(_length);
 	
-	var _take = __webpack_require__(179);
+	var _take = __webpack_require__(180);
 	
 	var _take2 = _interopRequireDefault(_take);
 	
@@ -23366,11 +23431,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _pipe2 = _interopRequireDefault(_pipe);
 	
-	var _isEmpty = __webpack_require__(182);
+	var _isEmpty = __webpack_require__(183);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
-	var _anyPass = __webpack_require__(167);
+	var _anyPass = __webpack_require__(168);
 	
 	var _anyPass2 = _interopRequireDefault(_anyPass);
 	
@@ -23382,7 +23447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _map2 = _interopRequireDefault(_map);
 	
-	var _addIndex = __webpack_require__(184);
+	var _addIndex = __webpack_require__(185);
 	
 	var _addIndex2 = _interopRequireDefault(_addIndex);
 	
@@ -23455,7 +23520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var cpf = exports.cpf = validateId([9, 10]);
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var always = __webpack_require__(39);
@@ -23480,13 +23545,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry1 = __webpack_require__(7);
 	var curryN = __webpack_require__(23);
 	var max = __webpack_require__(48);
-	var pluck = __webpack_require__(168);
+	var pluck = __webpack_require__(169);
 	var reduce = __webpack_require__(49);
 	
 	
@@ -23531,7 +23596,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23562,7 +23627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23599,7 +23664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23634,7 +23699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23669,7 +23734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23698,10 +23763,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 177 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var invoker = __webpack_require__(178);
+	var invoker = __webpack_require__(179);
 	
 	
 	/**
@@ -23728,7 +23793,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 178 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -23773,12 +23838,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 179 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
 	var _dispatchable = __webpack_require__(10);
-	var _xtake = __webpack_require__(180);
+	var _xtake = __webpack_require__(181);
 	var slice = __webpack_require__(75);
 	
 	
@@ -23827,11 +23892,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
-	var _reduced = __webpack_require__(181);
+	var _reduced = __webpack_require__(182);
 	var _xfBase = __webpack_require__(22);
 	
 	module.exports = (function() {
@@ -23853,7 +23918,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 181 */
+/* 182 */
 /***/ function(module, exports) {
 
 	module.exports = function _reduced(x) {
@@ -23866,11 +23931,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 182 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry1 = __webpack_require__(7);
-	var empty = __webpack_require__(183);
+	var empty = __webpack_require__(184);
 	var equals = __webpack_require__(30);
 	
 	
@@ -23901,7 +23966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 183 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry1 = __webpack_require__(7);
@@ -23954,7 +24019,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _concat = __webpack_require__(46);
@@ -24002,46 +24067,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	});
 
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _equals = __webpack_require__(30);
-	
-	var _equals2 = _interopRequireDefault(_equals);
-	
-	var _length = __webpack_require__(55);
-	
-	var _length2 = _interopRequireDefault(_length);
-	
-	var _toString = __webpack_require__(102);
-	
-	var _toString2 = _interopRequireDefault(_toString);
-	
-	var _pipe = __webpack_require__(71);
-	
-	var _pipe2 = _interopRequireDefault(_pipe);
-	
-	var _replace = __webpack_require__(101);
-	
-	var _replace2 = _interopRequireDefault(_replace);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var clean = (0, _replace2.default)(/[^0-9]+/g, '');
-	
-	exports.default = function (size) {
-	  return (0, _pipe2.default)(_toString2.default, clean, _length2.default, (0, _equals2.default)(size));
-	};
-	
-	module.exports = exports['default'];
 
 /***/ },
 /* 186 */
@@ -24131,15 +24156,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
+	var _ap = __webpack_require__(45);
+	
+	var _ap2 = _interopRequireDefault(_ap);
+	
 	var _omit = __webpack_require__(191);
 	
 	var _omit2 = _interopRequireDefault(_omit);
 	
-	var _prop = __webpack_require__(165);
+	var _apply = __webpack_require__(173);
+	
+	var _apply2 = _interopRequireDefault(_apply);
+	
+	var _applySpec = __webpack_require__(192);
+	
+	var _applySpec2 = _interopRequireDefault(_applySpec);
+	
+	var _prop = __webpack_require__(166);
 	
 	var _prop2 = _interopRequireDefault(_prop);
 	
-	var _ = __webpack_require__(164);
+	var _ = __webpack_require__(165);
 	
 	var _2 = _interopRequireDefault(_);
 	
@@ -24147,7 +24184,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _has2 = _interopRequireDefault(_has);
 	
-	var _not = __webpack_require__(192);
+	var _not = __webpack_require__(194);
 	
 	var _not2 = _interopRequireDefault(_not);
 	
@@ -24155,64 +24192,71 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _pipe2 = _interopRequireDefault(_pipe);
 	
-	var _getBrand = __webpack_require__(193);
+	var _brand = __webpack_require__(195);
 	
-	var _getBrand2 = _interopRequireDefault(_getBrand);
+	var _brand2 = _interopRequireDefault(_brand);
 	
-	var _cvv = __webpack_require__(200);
+	var _cvv = __webpack_require__(203);
 	
 	var _cvv2 = _interopRequireDefault(_cvv);
 	
-	var _isValidCardNumber = __webpack_require__(201);
+	var _cardNumber = __webpack_require__(204);
 	
-	var _isValidCardNumber2 = _interopRequireDefault(_isValidCardNumber);
+	var _cardNumber2 = _interopRequireDefault(_cardNumber);
 	
-	var _isValidExpirationDate = __webpack_require__(205);
+	var _date = __webpack_require__(208);
 	
-	var _isValidExpirationDate2 = _interopRequireDefault(_isValidExpirationDate);
+	var _date2 = _interopRequireDefault(_date);
 	
-	var _isValidHolderName = __webpack_require__(211);
+	var _holder = __webpack_require__(214);
 	
-	var _isValidHolderName2 = _interopRequireDefault(_isValidHolderName);
+	var _holder2 = _interopRequireDefault(_holder);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var validProps = ['card_holder_name', 'card_number', 'card_expiration_date', 'card_cvv'];
 	
 	var missingProps = function missingProps(card) {
-	  var cardIsMissingProp = (0, _pipe2.default)((0, _has2.default)(_2.default, card), _not2.default);
-	  return validProps.filter(cardIsMissingProp);
+	  var missing = (0, _pipe2.default)((0, _has2.default)(_2.default, card), _not2.default);
+	  return validProps.filter(missing);
 	};
 	
-	var missingNumber = (0, _pipe2.default)((0, _has2.default)('card_number'), _not2.default);
+	var hasCardNumber = (0, _has2.default)('card_number');
 	
-	var validateCardData = function validateCardData(card) {
-	  if (missingNumber(card)) {
-	    throw new Error('Missing card number');
+	var validDate = (0, _pipe2.default)((0, _prop2.default)('card_expiration_date'), _date2.default);
+	
+	var validHolder = (0, _pipe2.default)((0, _prop2.default)('card_holder_name'), _holder2.default);
+	
+	var validCardNumber = (0, _pipe2.default)((0, _prop2.default)('card_number'), _cardNumber2.default);
+	
+	var validCvv = function validCvv(brandName) {
+	  return (0, _pipe2.default)((0, _prop2.default)('card_cvv'), (0, _cvv2.default)(brandName));
+	};
+	
+	var getBrand = (0, _pipe2.default)((0, _prop2.default)('card_number'), _brand2.default);
+	
+	var validateAll = function validateAll(card) {
+	  return (0, _applySpec2.default)({
+	    brand: getBrand,
+	    card_holder_name: validHolder,
+	    card_number: validCardNumber,
+	    card_expiration_date: validDate,
+	    card_cvv: validCvv(getBrand(card))
+	  })(card);
+	};
+	
+	var validateExistentProps = function validateExistentProps(card) {
+	  return (0, _apply2.default)(_omit2.default, (0, _ap2.default)([missingProps, validateAll], [card]));
+	};
+	
+	var validate = function validate(card) {
+	  if (hasCardNumber(card)) {
+	    return validateExistentProps(card);
 	  }
-	
-	  var validateExpirationDate = (0, _pipe2.default)((0, _prop2.default)('card_expiration_date'), _isValidExpirationDate2.default);
-	
-	  var validateCardHolderName = (0, _pipe2.default)((0, _prop2.default)('card_holder_name'), _isValidHolderName2.default);
-	
-	  var validateCardNumber = (0, _pipe2.default)((0, _prop2.default)('card_number'), _isValidCardNumber2.default);
-	
-	  var brand = (0, _getBrand2.default)((0, _prop2.default)('card_number', card));
-	
-	  var validateCvv = (0, _pipe2.default)((0, _prop2.default)('card_cvv'), (0, _cvv2.default)(_2.default, brand));
-	
-	  var validated = {
-	    brand: brand,
-	    card_holder_name: validateCardHolderName(card),
-	    card_number: validateCardNumber(card),
-	    card_expiration_date: validateExpirationDate(card),
-	    card_cvv: brand ? validateCvv(card) : false
-	  };
-	
-	  return (0, _omit2.default)(missingProps(card), validated);
+	  throw new Error('Missing card number');
 	};
 	
-	exports.default = validateCardData;
+	exports.default = validate;
 	module.exports = exports['default'];
 
 /***/ },
@@ -24255,6 +24299,92 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry1 = __webpack_require__(7);
+	var apply = __webpack_require__(173);
+	var curryN = __webpack_require__(23);
+	var map = __webpack_require__(9);
+	var max = __webpack_require__(48);
+	var pluck = __webpack_require__(169);
+	var reduce = __webpack_require__(49);
+	var values = __webpack_require__(193);
+	
+	
+	/**
+	 * Given a spec object recursively mapping properties to functions, creates a
+	 * function producing an object of the same structure, by mapping each property
+	 * to the result of calling its associated function with the supplied arguments.
+	 *
+	 * @func
+	 * @memberOf R
+	 * @since v0.20.0
+	 * @category Function
+	 * @sig {k: ((a, b, ..., m) -> v)} -> ((a, b, ..., m) -> {k: v})
+	 * @param {Object} spec an object recursively mapping properties to functions for
+	 *        producing the values for these properties.
+	 * @return {Function} A function that returns an object of the same structure
+	 * as `spec', with each property set to the value returned by calling its
+	 * associated function with the supplied arguments.
+	 * @see R.converge, R.juxt
+	 * @example
+	 *
+	 *      var getMetrics = R.applySpec({
+	 *                                      sum: R.add,
+	 *                                      nested: { mul: R.multiply }
+	 *                                   });
+	 *      getMetrics(2, 4); // => { sum: 6, nested: { mul: 8 } }
+	 */
+	module.exports = _curry1(function applySpec(spec) {
+	  spec = map(function(v) { return typeof v == 'function' ? v : applySpec(v) },
+	             spec);
+	  return curryN(reduce(max, 0, pluck('length', values(spec))),
+	                function() {
+	                  var args = arguments;
+	                  return map(function(f) { return apply(f, args); }, spec);
+	                });
+	});
+
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _curry1 = __webpack_require__(7);
+	var keys = __webpack_require__(25);
+	
+	
+	/**
+	 * Returns a list of all the enumerable own properties of the supplied object.
+	 * Note that the order of the output array is not guaranteed across different
+	 * JS platforms.
+	 *
+	 * @func
+	 * @memberOf R
+	 * @since v0.1.0
+	 * @category Object
+	 * @sig {k: v} -> [v]
+	 * @param {Object} obj The object to extract values from
+	 * @return {Array} An array of the values of the object's own properties.
+	 * @example
+	 *
+	 *      R.values({a: 1, b: 2, c: 3}); //=> [1, 2, 3]
+	 */
+	module.exports = _curry1(function values(obj) {
+	  var props = keys(obj);
+	  var len = props.length;
+	  var vals = [];
+	  var idx = 0;
+	  while (idx < len) {
+	    vals[idx] = obj[props[idx]];
+	    idx += 1;
+	  }
+	  return vals;
+	});
+
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var _curry1 = __webpack_require__(7);
 	
 	
 	/**
@@ -24282,7 +24412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 193 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24295,7 +24425,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _always2 = _interopRequireDefault(_always);
 	
-	var _isEmpty = __webpack_require__(182);
+	var _isEmpty = __webpack_require__(183);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
@@ -24303,19 +24433,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ifElse2 = _interopRequireDefault(_ifElse);
 	
-	var _last = __webpack_require__(194);
+	var _toString = __webpack_require__(102);
+	
+	var _toString2 = _interopRequireDefault(_toString);
+	
+	var _defaultTo = __webpack_require__(196);
+	
+	var _defaultTo2 = _interopRequireDefault(_defaultTo);
+	
+	var _equals = __webpack_require__(30);
+	
+	var _equals2 = _interopRequireDefault(_equals);
+	
+	var _last = __webpack_require__(197);
 	
 	var _last2 = _interopRequireDefault(_last);
 	
-	var _find = __webpack_require__(195);
+	var _find = __webpack_require__(198);
 	
 	var _find2 = _interopRequireDefault(_find);
 	
-	var _head = __webpack_require__(197);
+	var _head = __webpack_require__(200);
 	
 	var _head2 = _interopRequireDefault(_head);
 	
-	var _toPairs = __webpack_require__(198);
+	var _toPairs = __webpack_require__(201);
 	
 	var _toPairs2 = _interopRequireDefault(_toPairs);
 	
@@ -24327,7 +24469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _replace2 = _interopRequireDefault(_replace);
 	
-	var _ = __webpack_require__(164);
+	var _ = __webpack_require__(165);
 	
 	var _2 = _interopRequireDefault(_);
 	
@@ -24335,7 +24477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _map2 = _interopRequireDefault(_map);
 	
-	var _bins = __webpack_require__(199);
+	var _bins = __webpack_require__(202);
 	
 	var _bins2 = _interopRequireDefault(_bins);
 	
@@ -24360,18 +24502,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	};
 	
-	var getBrand = (0, _pipe2.default)(makeCardMatcher, mapBins, _toPairs2.default, (0, _find2.default)(function (pair) {
-	  return (0, _last2.default)(pair) === true;
-	}), _head2.default);
+	var brand = (0, _pipe2.default)(makeCardMatcher, mapBins, _toPairs2.default, (0, _find2.default)((0, _pipe2.default)(_last2.default, (0, _equals2.default)(true))), (0, _defaultTo2.default)(['unknown']), _head2.default);
 	
-	exports.default = (0, _pipe2.default)(clean, (0, _ifElse2.default)(_isEmpty2.default, (0, _always2.default)('unknown'), getBrand));
+	exports.default = (0, _pipe2.default)(_toString2.default, clean, (0, _ifElse2.default)(_isEmpty2.default, (0, _always2.default)('unknown'), brand));
 	module.exports = exports['default'];
 
 /***/ },
-/* 194 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var nth = __webpack_require__(173);
+	var _curry2 = __webpack_require__(6);
+	
+	
+	/**
+	 * Returns the second argument if it is not `null`, `undefined` or `NaN`
+	 * otherwise the first argument is returned.
+	 *
+	 * @func
+	 * @memberOf R
+	 * @since v0.10.0
+	 * @category Logic
+	 * @sig a -> b -> a | b
+	 * @param {a} val The default value.
+	 * @param {b} val The value to return if it is not null or undefined
+	 * @return {*} The the second value or the default value
+	 * @example
+	 *
+	 *      var defaultTo42 = R.defaultTo(42);
+	 *
+	 *      defaultTo42(null);  //=> 42
+	 *      defaultTo42(undefined);  //=> 42
+	 *      defaultTo42('Ramda');  //=> 'Ramda'
+	 *      defaultTo42(parseInt('string')); //=> 42
+	 */
+	module.exports = _curry2(function defaultTo(d, v) {
+	  return v == null || v !== v ? d : v;
+	});
+
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nth = __webpack_require__(174);
 	
 	
 	/**
@@ -24398,12 +24571,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 195 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
 	var _dispatchable = __webpack_require__(10);
-	var _xfind = __webpack_require__(196);
+	var _xfind = __webpack_require__(199);
 	
 	
 	/**
@@ -24443,11 +24616,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 196 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
-	var _reduced = __webpack_require__(181);
+	var _reduced = __webpack_require__(182);
 	var _xfBase = __webpack_require__(22);
 	
 	
@@ -24477,10 +24650,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 197 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var nth = __webpack_require__(173);
+	var nth = __webpack_require__(174);
 	
 	
 	/**
@@ -24508,7 +24681,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 198 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry1 = __webpack_require__(7);
@@ -24545,7 +24718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 199 */
+/* 202 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24567,7 +24740,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 200 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24579,10 +24752,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _toString = __webpack_require__(102);
 	
 	var _toString2 = _interopRequireDefault(_toString);
-	
-	var _curry = __webpack_require__(52);
-	
-	var _curry2 = _interopRequireDefault(_curry);
 	
 	var _always = __webpack_require__(39);
 	
@@ -24614,23 +24783,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var isAmex = (0, _equals2.default)('amex');
 	
-	var isLength = function isLength(size) {
+	var lengthEquals = function lengthEquals(size) {
 	  return (0, _pipe2.default)(_length2.default, (0, _equals2.default)(size));
 	};
 	
-	var validate = function validate(brand) {
-	  return (0, _ifElse2.default)((0, _always2.default)(isAmex(brand)), isLength(4), isLength(3));
+	var validateFrom = function validateFrom(brand) {
+	  return (0, _ifElse2.default)((0, _always2.default)(isAmex(brand)), lengthEquals(4), lengthEquals(3));
 	};
 	
-	var isValidCvv = (0, _curry2.default)(function (cvv, brand) {
-	  return (0, _pipe2.default)(_toString2.default, clean, validate(brand))(cvv);
-	});
+	var validate = function validate(brand) {
+	  return (0, _pipe2.default)(_toString2.default, clean, validateFrom(brand));
+	};
 	
-	exports.default = isValidCvv;
+	exports.default = validate;
 	module.exports = exports['default'];
 
 /***/ },
-/* 201 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24643,11 +24812,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _toString2 = _interopRequireDefault(_toString);
 	
-	var _subtract = __webpack_require__(174);
+	var _subtract = __webpack_require__(175);
 	
 	var _subtract2 = _interopRequireDefault(_subtract);
 	
-	var _add = __webpack_require__(176);
+	var _add = __webpack_require__(177);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
@@ -24655,15 +24824,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _reduce2 = _interopRequireDefault(_reduce);
 	
-	var _dropLast = __webpack_require__(202);
+	var _dropLast = __webpack_require__(205);
 	
 	var _dropLast2 = _interopRequireDefault(_dropLast);
 	
-	var _last = __webpack_require__(194);
+	var _last = __webpack_require__(197);
 	
 	var _last2 = _interopRequireDefault(_last);
 	
-	var _F = __webpack_require__(170);
+	var _F = __webpack_require__(171);
 	
 	var _F2 = _interopRequireDefault(_F);
 	
@@ -24683,7 +24852,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _and2 = _interopRequireDefault(_and);
 	
-	var _not = __webpack_require__(192);
+	var _not = __webpack_require__(194);
 	
 	var _not2 = _interopRequireDefault(_not);
 	
@@ -24691,11 +24860,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _equals2 = _interopRequireDefault(_equals);
 	
-	var _ = __webpack_require__(164);
+	var _ = __webpack_require__(165);
 	
 	var _2 = _interopRequireDefault(_);
 	
-	var _modulo = __webpack_require__(175);
+	var _modulo = __webpack_require__(176);
 	
 	var _modulo2 = _interopRequireDefault(_modulo);
 	
@@ -24764,13 +24933,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 202 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
 	var _dispatchable = __webpack_require__(10);
-	var _dropLast = __webpack_require__(203);
-	var _xdropLast = __webpack_require__(204);
+	var _dropLast = __webpack_require__(206);
+	var _xdropLast = __webpack_require__(207);
 	
 	
 	/**
@@ -24798,10 +24967,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 203 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var take = __webpack_require__(179);
+	var take = __webpack_require__(180);
 	
 	module.exports = function dropLast(n, xs) {
 	  return take(n < xs.length ? xs.length - n : 0, xs);
@@ -24809,7 +24978,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 204 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -24849,7 +25018,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 205 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24878,7 +25047,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _T2 = _interopRequireDefault(_T);
 	
-	var _F = __webpack_require__(170);
+	var _F = __webpack_require__(171);
 	
 	var _F2 = _interopRequireDefault(_F);
 	
@@ -24890,19 +25059,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _merge2 = _interopRequireDefault(_merge);
 	
-	var _zipObj = __webpack_require__(206);
+	var _zipObj = __webpack_require__(209);
 	
 	var _zipObj2 = _interopRequireDefault(_zipObj);
 	
-	var _splitEvery = __webpack_require__(207);
+	var _splitEvery = __webpack_require__(210);
 	
 	var _splitEvery2 = _interopRequireDefault(_splitEvery);
 	
-	var _gt = __webpack_require__(208);
+	var _gt = __webpack_require__(211);
 	
 	var _gt2 = _interopRequireDefault(_gt);
 	
-	var _lte = __webpack_require__(209);
+	var _lte = __webpack_require__(212);
 	
 	var _lte2 = _interopRequireDefault(_lte);
 	
@@ -24918,19 +25087,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _equals2 = _interopRequireDefault(_equals);
 	
-	var _prop = __webpack_require__(165);
+	var _prop = __webpack_require__(166);
 	
 	var _prop2 = _interopRequireDefault(_prop);
 	
-	var _lt = __webpack_require__(210);
+	var _lt = __webpack_require__(213);
 	
 	var _lt2 = _interopRequireDefault(_lt);
 	
-	var _add = __webpack_require__(176);
+	var _add = __webpack_require__(177);
 	
 	var _add2 = _interopRequireDefault(_add);
 	
-	var _modulo = __webpack_require__(175);
+	var _modulo = __webpack_require__(176);
 	
 	var _modulo2 = _interopRequireDefault(_modulo);
 	
@@ -24994,7 +25163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 
 /***/ },
-/* 206 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -25030,7 +25199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 207 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -25068,7 +25237,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 208 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -25099,7 +25268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 209 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -25130,7 +25299,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 210 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _curry2 = __webpack_require__(6);
@@ -25161,7 +25330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 211 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25190,6 +25359,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = (0, _pipe2.default)(_toString2.default, (0, _replace2.default)(/"/g, "'"), (0, _test2.default)(/^[a-zA-Z_' ]*$/));
 	module.exports = exports["default"];
+
+/***/ },
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _equals = __webpack_require__(30);
+	
+	var _equals2 = _interopRequireDefault(_equals);
+	
+	var _length = __webpack_require__(55);
+	
+	var _length2 = _interopRequireDefault(_length);
+	
+	var _toString = __webpack_require__(102);
+	
+	var _toString2 = _interopRequireDefault(_toString);
+	
+	var _pipe = __webpack_require__(71);
+	
+	var _pipe2 = _interopRequireDefault(_pipe);
+	
+	var _replace = __webpack_require__(101);
+	
+	var _replace2 = _interopRequireDefault(_replace);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var clean = (0, _replace2.default)(/[^0-9]+/g, '');
+	
+	exports.default = function (size) {
+	  return (0, _pipe2.default)(_toString2.default, clean, _length2.default, (0, _equals2.default)(size));
+	};
+	
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ])
