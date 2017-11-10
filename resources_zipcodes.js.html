@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>resources/invites.js - Postman Documentation</title>
+    <title>resources/zipcodes.js - Postman Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">resources/invites.js</h1>
+    <h1 class="page-title">resources/zipcodes.js</h1>
     
 
     
@@ -39,91 +39,38 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @name Invites
+ * @name Zipcodes
  * @description This module exposes functions
- *              related to the `/invites` path.
+ *              related to the `/zipcodes` path.
  *
- * @module invites
+ * @module zipcodes
  **/
 
-import { cond, has, T, curry } from 'ramda'
+import { curry } from 'ramda'
+
 import routes from '../routes'
 import request from '../request'
 
-
-const findOne = curry((opts, body) =>
-  request.get(opts, routes.invites.details(body.id), {})
-)
-
-const findAll = opts =>
-  request.get(opts, routes.invites.base, {})
-
 /**
- * `GET /invites`
- * Makes a request to /invites or to /invites/:id
+ * `GET /zipcodes`
+ * Makes a request to /zipcodes/:zipcode
  *
- * @param {Object} opts - An options params which
+ * @param {Object} opts An options params which
  *                      is usually already bound
  *                      by `connect` functions.
  *
- * @param {Object} body - The payload for the request.
- * @param {String} [body.id] - The invite ID. If not sent an
- *                           invite list will be returned instead
- */
-const find = (opts, body = {}) =>
-  cond([
-    [has('id'), findOne(opts)],
-    [T, () => findAll(opts)],
-  ])(body)
-
-/**
- * `GET /invites`
- * Makes a request to /invites to get all invites.
- *
+ * @param {Object} body The payload for the request.
+ * {@link https://docs.pagar.me/v2017-07-17/reference#consulta-de-cep|API Reference for this payload}
+ * @param {String} [body.zipcode] The zipcode you want more information about.
+ *                                If not sent an API error will be returned instead.
 */
-const all = opts =>
-  findAll(opts)
 
-/**
- * `POST /invites`
- * Creates an invite from the given payload.
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body A payload that contains
- *                      email and permission
- *                      of the invited person.
- *
- * @returns {Promise} Resolves to the result of
- *                    the request or to an error.
- */
-const create = (opts, body) =>
-  request.post(opts, routes.invites.base, body)
-
-/**
- * `DELETE /invites`
- * Deletes an invite from the given payload.
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {String} [body.id] - The invite ID. If not sent an
- *                           invite list will be returned instead
- *
- * @returns {Promise} Resolves to the result of
- *                    the request or to an error.
- */
-const destroy = (opts, body) =>
-  request.delete(opts, routes.invites.details(body.id), {})
+const find = curry((opts, body) =>
+  request.get(opts, routes.zipcodes.details(body.zipcode), {})
+)
 
 export default {
   find,
-  all,
-  create,
-  destroy,
 }
 </code></pre>
         </article>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>resources/invites.js - Postman Documentation</title>
+    <title>validations - Postman Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,106 +28,193 @@
 
 <div id="main">
     
-    <h1 class="page-title">resources/invites.js</h1>
+    <h1 class="page-title">validations</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @name Invites
- * @description This module exposes functions
- *              related to the `/invites` path.
- *
- * @module invites
- **/
+        
+            
+        
+    
+</header>
 
-import { cond, has, T, curry } from 'ramda'
-import routes from '../routes'
-import request from '../request'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>This module handles needed validations</p></div>
+        
+
+        
+            
 
 
-const findOne = curry((opts, body) =>
-  request.get(opts, routes.invites.details(body.id), {})
-)
 
-const findAll = opts =>
-  request.get(opts, routes.invites.base, {})
 
-/**
- * `GET /invites`
- * Makes a request to /invites or to /invites/:id
- *
- * @param {Object} opts - An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body - The payload for the request.
- * @param {String} [body.id] - The invite ID. If not sent an
- *                           invite list will be returned instead
- */
-const find = (opts, body = {}) =>
-  cond([
-    [has('id'), findOne(opts)],
-    [T, () => findAll(opts)],
-  ])(body)
 
-/**
- * `GET /invites`
- * Makes a request to /invites to get all invites.
- *
-*/
-const all = opts =>
-  findAll(opts)
 
-/**
- * `POST /invites`
- * Creates an invite from the given payload.
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body A payload that contains
- *                      email and permission
- *                      of the invited person.
- *
- * @returns {Promise} Resolves to the result of
- *                    the request or to an error.
- */
-const create = (opts, body) =>
-  request.post(opts, routes.invites.base, body)
 
-/**
- * `DELETE /invites`
- * Deletes an invite from the given payload.
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {String} [body.id] - The invite ID. If not sent an
- *                           invite list will be returned instead
- *
- * @returns {Promise} Resolves to the result of
- *                    the request or to an error.
- */
-const destroy = (opts, body) =>
-  request.delete(opts, routes.invites.details(body.id), {})
 
-export default {
-  find,
-  all,
-  create,
-  destroy,
-}
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="validations_index.js.html">validations/index.js</a>, <a href="validations_index.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="~validate"><span class="type-signature">(inner, constant) </span>validate<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>This method validates the properties supplied in the object.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="validations_index.js.html">validations/index.js</a>, <a href="validations_index.js.html#line69">line 69</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
