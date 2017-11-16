@@ -1,6 +1,6 @@
 import qs from 'qs'
 import {
-  concat,
+  join,
   tail,
   pipe,
   split,
@@ -18,7 +18,7 @@ const parsers = {
     body: pipe(
       split('?'),
       tail,
-      concat(''),
+      join(''),
       qs.parse
     ),
   },
