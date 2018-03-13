@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>resources/cards.js - Postman Documentation</title>
+    <title>chargebacks - Postman Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,101 +28,313 @@
 
 <div id="main">
     
-    <h1 class="page-title">resources/cards.js</h1>
+    <h1 class="page-title">chargebacks</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @name Cards
- * @description This module exposes functions
- *              related to the `/cards` path.
- *
- * @module cards
- **/
-import { cond, has, T, curry } from 'ramda'
+        
+            
+        
+    
+</header>
 
-import routes from '../routes'
-import request from '../request'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>This module exposes functions
+             related to the <code>/chargebacks</code> path.</p></div>
+        
 
-const findOne = curry((opts, body) =>
-  request.get(opts, routes.cards.details(body.id), {})
-)
+        
+            
 
-const findAll = curry((opts, pagination) =>
-  request.get(opts, routes.cards.base, pagination || {})
-)
 
-/**
- * `GET /cards`
- * Makes a request to /cards or to /cards/:id
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body The payload for the request.
- * {@link https://pagarme.readme.io/v1/reference#retornando-um-cartão-salvo-1|API Reference for this payload}
- * @param {Number} [body.id] The cards's ID. If not sent a
- *                           cards list will be returned instead.
- * @param {Number} [body.count] Pagination option to get a list of cards.
- *                              Number of cards in a page
- * @param {Number} [body.page] Pagination option for a list of cards.
- *                             The page index.
-*/
-const find = (opts, body) =>
-  cond([
-    [has('id'), findOne(opts)],
-    [T, findAll(opts)],
-  ])(body)
 
-/**
- * `GET /cards`
- * Makes a request to /cards
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body The payload for the request.
- * {@link https://pagarme.readme.io/v1/reference#retornando-todos-os-cartões|API Reference for this payload}
- * @param {Number} [body.count] Pagination option to get a list of cards.
- *                              Number of cards in a page
- * @param {Number} [body.page] Pagination option for a list of cards.
- *                             The page index.
-*/
-const all = (opts, pagination) =>
-  findAll(opts, pagination)
 
-/**
- * `POST /cards`
- * Creates a card from the given payload.
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- * @param {Object} body The payload for the request
- * {@link https://pagarme.readme.io/v1/reference#criando-um-cartao|API Reference for this payload}
- *
- * @returns {Promise} Resolves to the result of
- *                    the request or to an error.
- */
-const create = (opts, body) =>
-  request.post(opts, routes.cards.base, body)
 
-export default {
-  find,
-  all,
-  create,
-}
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="resources_chargebacks.js.html">resources/chargebacks.js</a>, <a href="resources_chargebacks.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~find"><span class="type-signature">(inner) </span>find<span class="signature">(opts, query)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p><code>GET /chargebacks</code>
+Finds chargebacks</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>An options params which
+                     is usually already bound
+                     by <code>connect</code> functions.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The query object to be sent.
+<a href="https://pagarme.readme.io/v1/reference#retornando-chargebacks">API Reference for this payload</a></p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="resources_chargebacks.js.html">resources/chargebacks.js</a>, <a href="resources_chargebacks.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>Resolves to the result of
+                   the request or to an error.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
