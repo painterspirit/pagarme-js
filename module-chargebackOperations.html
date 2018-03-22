@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>resources/bankAccounts.js - Postman Documentation</title>
+    <title>chargebackOperations - Postman Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,102 +28,194 @@
 
 <div id="main">
     
-    <h1 class="page-title">resources/bankAccounts.js</h1>
+    <h1 class="page-title">chargebackOperations</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @name BankAccounts
- * @description This module exposes functions
- *              related to the `/bank_accounts` path.
- *
- * @module bankAccounts
- **/
+        
+            
+        
+    
+</header>
 
-import { cond, has, T, curry } from 'ramda'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>This module exposes functions
+             related to chargeback operations.</p></div>
+        
 
-import routes from '../routes'
-import request from '../request'
+        
+            
 
-const findOne = curry((opts, body) =>
-  request.get(opts, routes.bankAccounts.details(body.id), {})
-)
 
-const findAll = curry((opts, pagination) =>
-  request.get(opts, routes.bankAccounts.base, pagination || {})
-)
 
-/**
- * `GET /bank_accounts`
- * Makes a request to /bank_accounts
- *
- * @param {Object} opts - An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body - The payload for the request.
- * {@link https://pagarme.readme.io/v1/reference#retornando-várias-contas-bancárias|API Reference for this payload}
- * @param {Number} [body.count] - Pagination option for a bank account list.
- *                                Number of bank accounts in a page
- * @param {Number} [body.page] - Pagination option for bank account list.
- *                               The page index.
-*/
-const all = (opts, body) =>
-  findAll(opts, body)
 
-/**
- * `GET /bank_accounts`
- * Makes a request to /bank_accounts or to /bank_accounts/:id
- *
- * @param {Object} opts - An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body - The payload for the request.
- * {@link https://pagarme.readme.io/v1/reference#retornando-uma-conta-bancária|API Reference for this payload}
- * @param {Number} [body.id] - The bankAccount ID. If not sent a
- *                             bankAccounts list will be returned instead.
- * @param {Number} [body.count] - Pagination option for a bank account list.
- *                                Number of bank accounts in a page
- * @param {Number} [body.page] - Pagination option for bank account list.
- *                               The page index.
-*/
-const find = (opts, body) =>
-  cond([
-    [has('id'), findOne(opts)],
-    [T, findAll(opts)],
-  ])(body)
 
-/**
- * `POST /bank_accounts`
- * Creates a bank account from the given payload.
- *
- * @param {Object} opts An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- * @param {Object} body The payload for the request
- * {@link https://pagarme.readme.io/v1/reference#criando-uma-conta-bancária|API Reference for this payload}
- *
- * @returns {Promise} Resolves to the result of
- *                    the request or to an error.
- */
-const create = (opts, body) =>
-  request.post(opts, routes.bankAccounts.base, body)
 
-export default {
-  all,
-  create,
-  find,
-}
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="resources_chargebackOperations.js.html">resources/chargebackOperations.js</a>, <a href="resources_chargebackOperations.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="~find"><span class="type-signature">(inner, constant) </span>find<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p><code>GET /transactions/:transaction_id/chargeback_operations</code></p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="resources_chargebackOperations.js.html">resources/chargebackOperations.js</a>, <a href="resources_chargebackOperations.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
