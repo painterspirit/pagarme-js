@@ -27,7 +27,7 @@ function testSync (test) {
     options: { baseURL: 'http://127.0.0.1:8080' },
   }
 
-  let syncClient = pagarme.client.connectSync(merge(opts, test.connect))
+  const syncClient = pagarme.client.connectSync(merge(opts, test.connect))
   return test.subject(syncClient)
     .then((response) => {
       expect(response.method).toBe(test.method)
@@ -42,5 +42,3 @@ export default function (test) {
     testSync(test),
   ])
 }
-
- 
