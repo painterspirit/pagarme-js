@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>resources/bankAccounts.js - Postman Documentation</title>
+    <title>resources/paymentLinks.js - Postman Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">resources/bankAccounts.js</h1>
+    <h1 class="page-title">resources/paymentLinks.js</h1>
     
 
     
@@ -39,11 +39,11 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @name BankAccounts
+ * @name PaymentLinks
  * @description This module exposes functions
- *              related to the `/bank_accounts` path.
+ *              related to the `/payment_links` path.
  *
- * @module bankAccounts
+ * @module paymentLinks
  **/
 
 import { cond, has, T, curry } from 'ramda'
@@ -52,47 +52,29 @@ import routes from '../routes'
 import request from '../request'
 
 const findOne = curry((opts, body) =>
-  request.get(opts, routes.bankAccounts.details(body.id), {})
+  request.get(opts, routes.paymentLinks.details(body.id), {})
 )
 
 const findAll = curry((opts, pagination) =>
-  request.get(opts, routes.bankAccounts.base, pagination || {})
+  request.get(opts, routes.paymentLinks.base, pagination || {})
 )
 
 /**
- * `GET /bank_accounts`
- * Makes a request to /bank_accounts
+ * `GET /payment_links`
+ * Makes a request to /payment_links or to /payment_links/:id
  *
- * @param {Object} opts - An options params which
+ * @param {Object} opts An options params which
  *                      is usually already bound
  *                      by `connect` functions.
  *
- * @param {Object} body - The payload for the request.
- * {@link https://pagarme.readme.io/v1/reference#retornando-várias-contas-bancárias|API Reference for this payload}
- * @param {Number} [body.count] - Pagination option for a bank account list.
- *                                Number of bank accounts in a page
- * @param {Number} [body.page] - Pagination option for bank account list.
- *                               The page index.
-*/
-const all = (opts, body) =>
-  findAll(opts, body)
-
-/**
- * `GET /bank_accounts`
- * Makes a request to /bank_accounts or to /bank_accounts/:id
- *
- * @param {Object} opts - An options params which
- *                      is usually already bound
- *                      by `connect` functions.
- *
- * @param {Object} body - The payload for the request.
- * {@link https://pagarme.readme.io/v1/reference#retornando-uma-conta-bancária|API Reference for this payload}
- * @param {Number} [body.id] - The bankAccount ID. If not sent a
- *                             bankAccounts list will be returned instead.
- * @param {Number} [body.count] - Pagination option for a bank account list.
- *                                Number of bank accounts in a page
- * @param {Number} [body.page] - Pagination option for bank account list.
- *                               The page index.
+ * @param {Object} body The payload for the request.
+ * {@link https://docs.pagar.me/v2017-08-28/reference#retornando-links-de-pagamento|API Reference for this payload}
+ * @param {Number} [body.id] The paymentLink ID. If not sent a
+ *                           paymentLink list will be returned instead.
+ * @param {Number} [body.count] Pagination option for paymentLink list.
+ *                              Number of paymentLink in a page
+ * @param {Number} [body.page] Pagination option for paymentLink list.
+ *                             The page index.
 */
 const find = (opts, body) =>
   cond([
@@ -101,25 +83,59 @@ const find = (opts, body) =>
   ])(body)
 
 /**
- * `POST /bank_accounts`
- * Creates a bank account from the given payload.
+ * `GET /payment_links`
+ * Makes a request to /payment_links to get all paymentLinks.
  *
  * @param {Object} opts An options params which
  *                      is usually already bound
  *                      by `connect` functions.
- * @param {Object} body The payload for the request
- * {@link https://pagarme.readme.io/v1/reference#criando-uma-conta-bancária|API Reference for this payload}
+ *
+ * @param {Number} [body.count] Pagination option for paymentLink list.
+ *                              Number of paymentLink in a page
+ * @param {Number} [body.page] Pagination option for paymentLink list.
+ *                             The page index.
+*/
+const all = (opts, body) =>
+  findAll(opts, body)
+
+/**
+ * `POST /payment_links`
+ * Creates a paymentLink from the given payload.
+ *
+ * @param {Object} opts An options params which
+ *                      is usually already bound
+ *                      by `connect` functions.
+ *
+ * @param {Object} body The payload for the request.
+ * {@link https://docs.pagar.me/v2017-08-28/reference#criando-um-link-de-pagamento-1|API Reference for this payload}
  *
  * @returns {Promise} Resolves to the result of
  *                    the request or to an error.
  */
 const create = (opts, body) =>
-  request.post(opts, routes.bankAccounts.base, body)
+  request.post(opts, routes.paymentLinks.base, body)
+
+/**
+ * `POST /payment_links/:id/cancel`
+ * Cancels a paymentLink from the given id.
+ *
+ * @param {Object} opts An options params which
+ *                      is usually already bound
+ *                      by `connect` functions.
+ *
+ * @param {Number} body.id The paymentLink ID.
+ *
+ * @returns {Promise} Resolves to the result of
+ *                    the request or to an error.
+ */
+const cancel = (opts, body) =>
+  request.post(opts, routes.paymentLinks.cancel(body.id), body)
 
 export default {
+  find,
   all,
   create,
-  find,
+  cancel,
 }
 </code></pre>
         </article>
