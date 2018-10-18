@@ -133,9 +133,9 @@ try {
 }
 ```
 
-The downside of this approach is that you need to handle errors using try/catch.
+The downside to this approach is that you need to handle errors using try/catch.
 
-Pagar.me authorizes clients in various fashions. This library handles all
+Pagar.me authorizes clients in various forms. This library handles all
 available authentication strategies:
 
 #### Using API key:
@@ -148,7 +148,7 @@ pagarme.client.connect({ api_key: 'ak_test_y7jk294ynbzf93' })
   .then(transactions => console.log(transactions))
 ```
 
-> :warning: Never use API keys in the browser, you should use encryption keys instead.
+> :warning: Never use API keys in the browser-- use encryption keys instead.
 
 #### Using encryption key:
 
@@ -194,7 +194,7 @@ API key. When submitting a PR, Travis will already have it exported.
 ## Contributing
 
 Community contributions are essential for keeping this library great. We
-simply can't access the huge number of platforms and myriad configurations
+simply can't access the huge number of platforms and the myriad of configurations
 for running it, so if you find any problems, feel free to open an issue.
 
 Be sure to provide at least the following information on the issue:
